@@ -3,6 +3,14 @@ import random
 import math
 
 
+class Point(object):
+
+    def __init__(self, x, y, width_way):
+        self.x = x
+        self.y = y
+        self.width_way = width_way
+
+
 def generate_map():
     size_zone = 3000  # Размер всей игровой зоны
     size_start_zone = 8  # Размер стартовой зоны
@@ -95,53 +103,53 @@ def generate_map():
     else:
         direction_y = 1
 
+    min_width_way = 2
+    max_width_way = 6
+
     while current_x != end_point[0] and current_y != end_point[1]:
         if abs(number_segments_x - number_segments_y) >= 2:  # Если движемся в одну сторону больше два и более шага.
             if number_segments_x > number_segments_y:  # Если X больше двигаемся по Y и наоборот.
                 current_y += distance_one_step_y * direction_y
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_y -= 1
             else:
                 current_x += distance_one_step_x * direction_x
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_x -= 1
         else:
             if random.randint(0, 1) == 0:  # Рандомное направление движения
                 current_x += distance_one_step_x * direction_x
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_x -= 1
             else:
                 current_y += distance_one_step_y * direction_y
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_y -= 1
 
         if number_segments_x == 1 or number_segments_y == 1:  # Если дошли до предпоследней точки
             if number_segments_x == 1:
                 while number_segments_y != 1:
                     current_y += distance_one_step_y * direction_y
-                    main_way.append([current_x, current_y])
+                    main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                     number_segments_y -= 1
             else:
                 while number_segments_x != 1:
                     current_x += distance_one_step_x * direction_x
-                    main_way.append([current_x, current_y])
+                    main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                     number_segments_x -= 1
             if random.randint(0, 1) == 0:  # Рандомные последние два шага, которые ведут в точные координаты конечной зоны
                 current_x = end_point[0]
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_x -= 1
                 current_y = end_point[1]
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_y -= 1
             else:
                 current_y = end_point[1]
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_y -= 1
                 current_x = end_point[0]
-                main_way.append([current_x, current_y])
+                main_way.append(Point(current_x, current_y, random.randint(min_width_way, max_width_way)))
                 number_segments_x -= 1
 
-    print(start_zone)
-    print(end_zone)
-    print(main_way)
 generate_map()
